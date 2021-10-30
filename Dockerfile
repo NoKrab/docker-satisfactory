@@ -1,7 +1,7 @@
 FROM debian:stable-slim
 RUN echo steam steam/license note '' | debconf-set-selections && echo steam steam/question select "I AGREE" | debconf-set-selections
-RUN dpkg --add-architecture i386 && \
-  sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list \
+RUN dpkg --add-architecture i386 \
+  && sed -i -e's/ main/ main contrib non-free/g' /etc/apt/sources.list \
   && apt-get -q update \
   && apt-get -qy dist-upgrade \
   && apt-get install -qy steamcmd libsdl2-2.0-0:i386 libsdl2-2.0-0 tini ca-certificates locales \
