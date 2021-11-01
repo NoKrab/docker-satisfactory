@@ -11,10 +11,10 @@ RUN dpkg --add-architecture i386 \
   && dpkg-reconfigure --frontend=noninteractive locales \
   && useradd -ms /bin/bash steam
 ENV PATH="/usr/games:${PATH}"
+ADD --chmod=0755 start_server.sh entrypoint.sh
 USER steam
 WORKDIR /home/steam
-ADD --chmod=0755 start_server.sh entrypoint.sh
 RUN mkdir SatisfactoryDedicatedServer Steam .config .steam .local
 VOLUME [ "/home/steam/SatisfactoryDedicatedServer", "/home/steam/Steam", "/home/steam/.config", "/home/steam/.steam", "/home/steam/.local" ]
 EXPOSE 7777/udp 15000/udp 15777/udp
-ENTRYPOINT ["/usr/bin/tini", "--", "/home/steam/entrypoint.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/entrypoint.sh"]
